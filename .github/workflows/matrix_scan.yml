@@ -14,14 +14,14 @@ jobs:
         with:
           cidr: ${{ matrix.target }}
       - name: upload reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: new-report
-          path: *.json
+          path: ./*.json
 
       - name: gen txt report
         run: ls -l *json > report.txt
-        
+
       - name: Push scanned packages to cache
         run: | 
           git config --global user.name 'techliberation'
