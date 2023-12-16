@@ -19,8 +19,6 @@ jobs:
       
       - run: go install github.com/j3ssie/sdlookup@latest
 
-      - run: echo "${{ matrix.target }}" | sdlookup -json > $(echo "${{ matrix.target }}" | tr / _).json
-
       - run: sudo apt update ; sudo apt install jq unzip ripgrep -y
 
       - run: wget -O ip-country-csv.zip "${{ secrets.IP2LOC_LINK }}" && unzip ip-country-csv.zip
