@@ -23,7 +23,7 @@ jobs:
 
       - name: filtering
         run: |
-          rg -F '"'${{ secrets.HOSTNAME_FILTER }}'"'' IP2LOCATION-LITE-DB1.CSV > filtered-ipdb.csv
+          rg -F '"'${{ secrets.HOSTNAME_FILTER }}'"' IP2LOCATION-LITE-DB1.CSV > filtered-ipdb.csv
           ./print_filtered_cidrs.py > filtered.cidrs
 
     
