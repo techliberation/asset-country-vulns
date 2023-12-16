@@ -4,12 +4,18 @@ on:
     - cron:  '0 0 * * 0' # weekly
 
 jobs:
-  ScanMatrixCIDRs:
+  QueryCIDRs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       
       - uses: actions/setup-go@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10' 
+
+      - run: pip install -r requirements.txt
       
       - run: go install github.com/j3ssie/sdlookup@latest
 
@@ -18,7 +24,6 @@ jobs:
       - run: sudo apt update ; sudo apt install jq unzip ripgrep -y
 
       - run: wget -O ip-country-csv.zip "${{ secrets.IP2LOC_LINK }}" && unzip ip-country-csv.zip
-
 
 
       - name: filtering
@@ -39,7 +44,7 @@ jobs:
       - name: gen txt report
         run: ls -l *json > report.txt
 
-      - name: Push scanned packages to cache
+      - name: Commit and push results
         run: | 
           git config --global user.name 'techliberation'
           git config --global user.email '111632185+techliberation@users.noreply.github.com'
