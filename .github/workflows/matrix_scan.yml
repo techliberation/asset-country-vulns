@@ -22,8 +22,9 @@ jobs:
 
       - run: wget -O ip-country.bin "${{ secrets.IP2LOC_LINK }}"
 
-      - run: |
-        jq -c 'select(.hostnames[] | contains ("${{ secrets.HOSTNAME_FILTER }}"))' < $(echo "${{ matrix.target }}" | tr / _).json > filtered_$(echo "${{ matrix.target }}" | tr / _).json
+      - name: filtering
+        run: |
+          jq -c 'select(.hostnames[] | contains ("'${{ secrets.HOSTNAME_FILTER }}'"))' < $(echo "${{ matrix.target }}" | tr / _).json > filtered_$(echo "${{ matrix.target }}" | tr / _).json
 
       - name: cleanup disk space
         run: |
